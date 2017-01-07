@@ -40,4 +40,4 @@ Some things to do, and ideas for potential features:
 
 * Initial release
 
-Brought to you by [Craig Horsborough](www.ghostwhite.net)
+Brought to you by [Craig Horsborough](http://www.ghostwhite.net)

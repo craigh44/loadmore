@@ -1,8 +1,8 @@
 # Load more plugin for Craft CMS
 
-Loads more entries on button click and adds below
+A Craft CMS plugin to load your paginated content and append below
 
-![Screenshot](resources/screenshots/plugin_logo.png)
+![Screenshot](resources/screenshots/ghostwhite.png)
 
 ## Installation
 

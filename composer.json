@@ -1,0 +1,14 @@
+{
+	"name": "craigh44/loadmore",
+	"description": "Loads more entries on button click and adds below",
+	"type": "craft-plugin",
+	"authors": [
+		{
+			"name": "Craig Horsborough",
+			"homepage": "www.ghostwhite.net"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0"
+	}
+}

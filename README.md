@@ -46,7 +46,8 @@ Load more works on Craft 2.4.x and Craft 2.5.x.
 
 //optional no more posts text
 <h1 id='no-more-pages' style='display: none;'>No more posts</h1>
-<button id='load-button'>Load more</button>```
+<button id='load-button'>Load more</button>
+```
 
 ## Load more Roadmap
 

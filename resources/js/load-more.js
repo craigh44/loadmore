@@ -20,7 +20,15 @@
     var nextPageUrl = Loader.getNextUrl();
 
     $.get(nextPageUrl, function( data ) {
-      Loader.requestListener(data);
+      var el = document.createElement('html');
+      el.innerHTML = data;
+
+      var element = el.getElementsByClassName('load-more-content')[0];
+      var currentPageContent = document.getElementsByClassName('load-more-content')[0];
+
+      currentPageContent.appendChild(element);
+
+      Loader.hideLoadingImage();
     });
 
     if (!nextPageUrl) {
@@ -31,17 +39,6 @@
   function LoadMore () {
     this.pageNumber = 1;
     this.totalPagesReached = false;
-
-    this.requestListener = function (responseData) {
-      var parser = new window.DOMParser(),
-          parsedXml = parser.parseFromString(responseData, "text/xml"),
-          nextPageContent = parsedXml.getElementById('load-more-content'),
-          currentPageContent = document.getElementById('load-more-content');
-
-      currentPageContent.appendChild(nextPageContent);
-
-      Loader.hideLoadingImage();
-    }
 
     this.getNextUrl = function () {
       this.pageNumber++;

@@ -1,6 +1,6 @@
 (function(){
   var loadMoreButton = document.getElementById('load-button');
-  var Helpers = new HelperFunctions;
+  var Loader = new LoadMore;
   var loadingImage = document.getElementById('loading-image');
   var noMorePostsElement = document.getElementById('no-more-pages');
 
@@ -11,24 +11,24 @@
   });
 
   loadMoreButton.onclick = function () {
-    if (Helpers.totalPagesReached) {
-      Helpers.displayNoMorePagesMessage();
+    if (Loader.totalPagesReached) {
+      Loader.displayNoMorePagesMessage();
       return;
     }
-    Helpers.showLoadingImage();
+    Loader.showLoadingImage();
     var request = new XMLHttpRequest(),
-        nextPageUrl = Helpers.getNextUrl();
+        nextPageUrl = Loader.getNextUrl();
 
         if (!nextPageUrl) {
           return;
         }
 
-    request.addEventListener("load", Helpers.requestListener);
+    request.addEventListener("load", Loader.requestListener);
     request.open("GET", nextPageUrl);
     request.send();
   }
 
-  function HelperFunctions () {
+  function LoadMore () {
     this.pageNumber = 1;
     this.totalPagesReached = false;
 
@@ -40,7 +40,7 @@
 
       currentPageContent.appendChild(nextPageContent);
 
-      Helpers.hideLoadingImage();
+      Loader.hideLoadingImage();
     }
 
     this.getNextUrl = function () {

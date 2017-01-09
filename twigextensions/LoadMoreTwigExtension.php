@@ -46,13 +46,13 @@ class LoadMoreTwigExtension extends \Twig_Extension
         );
     }
 
-    /**
-     * @return string
-     */
     public function loadMore($paginate)
     {
-        $script = "var nextUrl = '" .  $paginate->getNextUrl() . "';";
+        $loadingImg = UrlHelper::getResourceUrl('loadmore/img/ajax-loader.gif');
+        $script  = 'var totalNumberOfPages = ' . $paginate->totalPages . ';';
+        $script .= "var nextUrl = '" .  $paginate->getNextUrl() . "';";
+        $script .= "var loadingImagePath = '" . $loadingImg . "';";
         craft()->templates->includeJs($script);
-        $content = craft()->templates->includeJsResource('loadmore/js/load-more.js');
+        craft()->templates->includeJsResource('loadmore/js/load-more.js');
     }
 }

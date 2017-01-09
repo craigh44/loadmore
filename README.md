@@ -26,7 +26,27 @@ Load more works on Craft 2.4.x and Craft 2.5.x.
 
 ## Using Load more
 
--Insert text here-
+{% set articles = craft.entries.section('articles').limit(3).order('postDate') %}
+
+<div id="load-more-content">
+  {% paginate articles as articlesOnPage %}
+
+      {% for article in articlesOnPage %}
+          <article>
+              <h2>{{ article.title }}</h2>
+              <h3>{{ article.body }}</h3>
+          </article>
+      {% endfor %}
+
+      {{ paginate|loadMore() }}
+</div>
+
+//optional loading image
+<img id="loading-image" style='display: none;'>
+
+//optional no more posts text
+<h1 id='no-more-pages' style='display: none;'>No more posts</h1>
+<button id='load-button'>Load more</button>
 
 ## Load more Roadmap
 

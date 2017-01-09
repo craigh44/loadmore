@@ -35,8 +35,8 @@
     this.requestListener = function (responseData) {
       var parser = new window.DOMParser(),
           parsedXml = parser.parseFromString(responseData.target.responseText, "text/xml"),
-          nextPageContent = parsedXml.getElementById('left-main-content'),
-          currentPageContent = document.getElementById('left-main-content');
+          nextPageContent = parsedXml.getElementById('load-more-content'),
+          currentPageContent = document.getElementById('load-more-content');
 
       currentPageContent.appendChild(nextPageContent);
 

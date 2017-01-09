@@ -22,7 +22,8 @@ Adds a 'Load More' button to your paginated content and appends next page conten
 
 ## Using Load more
 
-```{% set articles = craft.entries.section('articles').limit(3).order('postDate') %}
+```
+{% set articles = craft.entries.section('articles').limit(3).order('postDate') %}
 
 <div id="load-more-content">
   {% paginate articles as articlesOnPage %}

@@ -16,16 +16,16 @@
       return;
     }
     Loader.showLoadingImage();
-    var request = new XMLHttpRequest(),
-        nextPageUrl = Loader.getNextUrl();
 
-        if (!nextPageUrl) {
-          return;
-        }
+    var nextPageUrl = Loader.getNextUrl();
 
-    request.addEventListener("load", Loader.requestListener);
-    request.open("GET", nextPageUrl);
-    request.send();
+    $.get(nextPageUrl, function( data ) {
+      Loader.requestListener(data);
+    });
+
+    if (!nextPageUrl) {
+      return;
+    }
   }
 
   function LoadMore () {
@@ -34,7 +34,7 @@
 
     this.requestListener = function (responseData) {
       var parser = new window.DOMParser(),
-          parsedXml = parser.parseFromString(responseData.target.responseText, "text/xml"),
+          parsedXml = parser.parseFromString(responseData, "text/xml"),
           nextPageContent = parsedXml.getElementById('load-more-content'),
           currentPageContent = document.getElementById('load-more-content');
 

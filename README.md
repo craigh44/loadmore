@@ -18,11 +18,7 @@ Load more works on Craft 2.4.x and Craft 2.5.x.
 
 ## Load more Overview
 
--Insert text here-
-
-## Configuring Load more
-
--Insert text here-
+Adds a 'Load More' button to your paginated content and appends next page content.
 
 ## Using Load more
 
@@ -46,18 +42,9 @@ Load more works on Craft 2.4.x and Craft 2.5.x.
 
 //optional no more posts text
 <h1 id='no-more-pages' style='display: none;'>No more posts</h1>
+
 <button id='load-button'>Load more</button>
 ```
-
-## Load more Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
-
-## Load more Changelog
-
-### 1.0.0 -- 2017.01.07
 
 * Initial release
 

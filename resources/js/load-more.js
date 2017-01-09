@@ -19,17 +19,10 @@
 
     var nextPageUrl = Loader.getNextUrl();
 
-    $.get(nextPageUrl, function( data ) {
-      var el = document.createElement('html');
-      el.innerHTML = data;
-
-      var element = el.getElementsByClassName('load-more-content')[0];
-      var currentPageContent = document.getElementsByClassName('load-more-content')[0];
-
-      currentPageContent.appendChild(element);
-
-      Loader.hideLoadingImage();
-    });
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.addEventListener("load", Loader.requestListener);
+    xmlHttp.open( "GET", nextPageUrl);
+    xmlHttp.send();
 
     if (!nextPageUrl) {
       return;
@@ -39,6 +32,18 @@
   function LoadMore () {
     this.pageNumber = 1;
     this.totalPagesReached = false;
+
+    this.requestListener = function (responseData) {
+      var el = document.createElement('html');
+      el.innerHTML = responseData.target.responseText;
+
+      var element = el.getElementsByClassName('load-more-content')[0];
+      var currentPageContent = document.getElementsByClassName('load-more-content')[0];
+
+      currentPageContent.appendChild(element);
+
+      Loader.hideLoadingImage();
+    }
 
     this.getNextUrl = function () {
       this.pageNumber++;

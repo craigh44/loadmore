@@ -35,7 +35,7 @@ Adds a 'Load More' button to your paginated content and appends next page conten
           </article>
       {% endfor %}
 
-      {{ paginate|loadMore() }}
+      {{ paginate|loadMore('load-more-content', 'load-button', 'no-more-pages', "loading-image") }}
 </div>
 
 //optional loading image

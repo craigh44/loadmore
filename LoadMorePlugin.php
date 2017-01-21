@@ -2,7 +2,7 @@
 /**
  * Load more plugin for Craft CMS
  *
- * Loads more entries on button click and adds below
+ * Load more Twig Extension
  *
  * @author    Craig Horsborough
  * @copyright Copyright (c) 2017 Craig Horsborough
@@ -13,118 +13,56 @@
 
 namespace Craft;
 
-class LoadMorePlugin extends BasePlugin
+use Twig_Extension;
+use Twig_Filter_Method;
+
+class LoadMoreTwigExtension extends \Twig_Extension
 {
     /**
-     * @return mixed
-     */
-    public function init()
-    {
-    }
-
-    /**
-     * @return mixed
+     * @return string The extension name
      */
     public function getName()
     {
-         return Craft::t('Load more');
+        return 'LoadMore';
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getDescription()
+    public function getFilters()
     {
-        return Craft::t('Loads more entries on button click and adds below');
+        return array(
+            'loadMore' => new \Twig_Filter_Method($this, 'loadMore'),
+        );
     }
 
     /**
-     * @return string
+    * @return array
      */
-    public function getDocumentationUrl()
+    public function getFunctions()
     {
-        return 'https://github.com/craigh44/loadmore/blob/master/README.md';
+        return array(
+            'someFunction' => new \Twig_Function_Method($this, 'someInternalFunction'),
+        );
     }
 
-    /**
-     * @return string
-     */
-    public function getReleaseFeedUrl()
+    public function loadMore($paginate, $wrapperClass, $buttonID, $endMessageID, $loadingImgID)
     {
-        return 'https://raw.githubusercontent.com/craigh44/loadmore/master/releases.json';
-    }
 
-    /**
-     * @return string
-     */
-    public function getVersion()
-    {
-        return '1.0.0';
-    }
+        craft()->templates->includeJsResource('loadmore/js/load-more.js');
 
-    /**
-     * @return string
-     */
-    public function getSchemaVersion()
-    {
-        return '1.0.0';
-    }
+        $loadingImg = UrlHelper::getResourceUrl('loadmore/img/ajax-loader.gif');
+        $script  = 'var totalNumberOfPages = ' . $paginate->totalPages . ';';
+        $script .= "var nextUrl = '" .  $paginate->getNextUrl() . "';";
+        $script .= "var loadingImagePath = '" . $loadingImg . "';";
+        $script .= "var wrapperClass = '" . $wrapperClass . "';";
+        $script .= "var buttonID = '" . $buttonID . "';";
+        $script .= "var endMessageID = '" . $endMessageID . "';";
+        $script .= "var loadingImgID = '" . $loadingImgID . "';";
 
-    /**
-     * @return string
-     */
-    public function getDeveloper()
-    {
-        return 'Craig Horsborough';
-    }
+        $script2 = "new LoadMore(totalNumberOfPages, nextUrl, loadingImagePath, wrapperClass, buttonID, endMessageID, loadingImgID);";
 
-    /**
-     * @return string
-     */
-    public function getDeveloperUrl()
-    {
-        return 'www.ghostwhite.net';
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasCpSection()
-    {
-        return false;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function addTwigExtension()
-    {
-        Craft::import('plugins.loadmore.twigextensions.LoadMoreTwigExtension');
-
-        return new LoadMoreTwigExtension();
-    }
-
-    /**
-     */
-    public function onBeforeInstall()
-    {
-    }
-
-    /**
-     */
-    public function onAfterInstall()
-    {
-    }
-
-    /**
-     */
-    public function onBeforeUninstall()
-    {
-    }
-
-    /**
-     */
-    public function onAfterUninstall()
-    {
+        craft()->templates->includeJs($script);
+        craft()->templates->includeJs($script2);
     }
 }

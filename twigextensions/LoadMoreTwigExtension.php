@@ -46,13 +46,23 @@ class LoadMoreTwigExtension extends \Twig_Extension
         );
     }
 
-    public function loadMore($paginate)
+    public function loadMore($paginate, $wrapperClass, $buttonID, $endMessageID, $loadingImgID)
     {
+
+        craft()->templates->includeJsResource('loadmore/js/load-more.js');
+
         $loadingImg = UrlHelper::getResourceUrl('loadmore/img/ajax-loader.gif');
         $script  = 'var totalNumberOfPages = ' . $paginate->totalPages . ';';
         $script .= "var nextUrl = '" .  $paginate->getNextUrl() . "';";
         $script .= "var loadingImagePath = '" . $loadingImg . "';";
+        $script .= "var wrapperClass = '" . $wrapperClass . "';";
+        $script .= "var buttonID = '" . $buttonID . "';";
+        $script .= "var endMessageID = '" . $endMessageID . "';";
+        $script .= "var loadingImgID = '" . $loadingImgID . "';";
+
+        $script2 = "new LoadMore(totalNumberOfPages, nextUrl, loadingImagePath, wrapperClass, buttonID, endMessageID, loadingImgID);";
+
         craft()->templates->includeJs($script);
-        craft()->templates->includeJsResource('loadmore/js/load-more.js');
+        craft()->templates->includeJs($script2);
     }
 }
